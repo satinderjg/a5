@@ -14,20 +14,48 @@
  */
 
 public class HeapPriorityQueue implements PriorityQueue {
-    
+    //Min heap
 	protected final static int DEFAULT_SIZE = 10000;
 
 	protected Comparable[] storage;
 	protected int currentSize;
 
 	private void swap(int index_from,int index_to){
-		Comparable temp = storage[index_from];
+		Comparable temp = this.storage[index_from];
+		this.storage[index_from]= this.storage[index_to];
+		this.storage[index_to]= temp;
+	}
+
+	private void bubbleDown(int index){
+
+	}
+	private void bubbleUp(int index){
+		if(index==1){
+			//top most
+			return;
+		}
+		int parent_index=(int)Math.floor(index/2);
+		Comparable parent = this.storage[parent_index].getElement();
+		Comparable kid = this.storage[index].getElement();
+		//if(storage[parent_index].getElement().compareTo(storage[index] <0){
+		if(parent.compareTo(kid) <0){
+			//7.compareto(4) <0
 		
+			swap(parent_index,index);
+			bubbleUp(parent_index);
+		}else{
+			// if it is == or smaller
+			return;
+			}
 	}
 
 
 	 public void insert(Comparable element){
+	 	if(currentSize==DEFAULT_SIZE){
+	 			throw new HeapFullException("Cannot insert heap is full!");
+	 	}
 	 	// very first element
+	 	
 		if(currentSize==0){
 			currentSize++;
 			storage[currentSize]=element;
@@ -35,10 +63,17 @@ public class HeapPriorityQueue implements PriorityQueue {
 		}
 		currentSize++;
 		storage[currentSize]=element;
+		// swap last and frist element //not in this on this will usefull in del 
+		//swap(1,currentSize);
+
+		// new element is at top of heap now bubbleUp!
+		bubbleUp(currentSize);
+
 
 
 	 }
 	 public Comparable removeMin(){
+
 	 	return null;
 	 }
 	 public boolean isEmpty(){
