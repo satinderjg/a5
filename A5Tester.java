@@ -38,12 +38,12 @@ public class A5Tester {
 		System.out.println("Testing " + (testHeapSolution ? "Heap" : "Linked" ) + " implementation.");
 		
 		testSize();
-		testInsertionAndRemoval();
-		testExceptions();
-		testGeneric();
-		testDuplicates();
-		testMixed();
-		stressTest();
+		//testInsertionAndRemoval();
+		//testExceptions();
+		//testGeneric();
+		//testDuplicates();
+		//testMixed();
+		//stressTest();
 
 		/* Uncomment the following lines once you begin Part 2 */
 		
@@ -71,6 +71,16 @@ public class A5Tester {
 
 		pq.insert(7);
 		displayResults (pq.size() == 3, "size on 3 element PQ");
+
+		pq.insert(3);
+		displayResults (pq.size() == 4, "size on 3 element PQ");
+
+		pq.insert(2);
+		displayResults (pq.size() == 5, "size on 3 element PQ");
+		pq.insert(1);
+		displayResults (pq.size() == 6, "size on 3 element PQ");
+
+		printStatements(pq.toString()+" -- heap");
 	}
 
 
@@ -80,7 +90,8 @@ public class A5Tester {
 		pq.insert(8);
 		pq.insert(9);
 		pq.insert(10);
-
+		printStatements(pq.toString()+"full heap");
+		//System.out.println(pq.toString());
 		int result;
 		result = ((Integer)pq.removeMin()).intValue();
 		// System.out.println("res: " + result + ":" + pq);
@@ -88,7 +99,9 @@ public class A5Tester {
 		displayResults(pq.size() == 2, "remove + size on multiple element PQ");
 
 		result = ((Integer)pq.removeMin()).intValue();
-		// System.out.println("res: " + result + ":" + pq);
+		System.out.println("res: expected 9 --" + result + ":" + pq);
+
+		//System.out.println(pq.toString());
 		displayResults(result == 9, "remove on multiple element PQ");
 		displayResults(pq.size() == 1, "remove + size on multiple element PQ");
 
@@ -410,6 +423,10 @@ public class A5Tester {
 			displayResults(false, "testing EmergencyRoom addPatient to full EmergencyRoom - should not get here");
 		}
 		
+	}
+
+	public static void printStatements(String s){
+		System.out.println(s);
 	}
 
 
