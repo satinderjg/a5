@@ -38,9 +38,10 @@ public class A5Tester {
 		System.out.println("Testing " + (testHeapSolution ? "Heap" : "Linked" ) + " implementation.");
 		
 		testSize();
-		//testInsertionAndRemoval();
-		//testExceptions();
-		//testGeneric();
+		testInsertionAndRemoval();
+		testExceptions();
+		testGeneric();
+		
 		//testDuplicates();
 		//testMixed();
 		//stressTest();
@@ -80,7 +81,7 @@ public class A5Tester {
 		pq.insert(1);
 		displayResults (pq.size() == 6, "size on 3 element PQ");
 
-		printStatements(pq.toString()+" -- heap");
+		//printStatements(pq.toString()+" -- heap");
 	}
 
 
@@ -90,18 +91,21 @@ public class A5Tester {
 		pq.insert(8);
 		pq.insert(9);
 		pq.insert(10);
-		printStatements(pq.toString()+"full heap");
+		//printStatements("\n"+pq.toString()+" this is our full heap");
 		//System.out.println(pq.toString());
 		int result;
 		result = ((Integer)pq.removeMin()).intValue();
-		// System.out.println("res: " + result + ":" + pq);
+
+		//System.out.println("res: " + result + ":" + pq);
 		displayResults(result == 8, "remove on multiple element PQ");
 		displayResults(pq.size() == 2, "remove + size on multiple element PQ");
 
+		//printStatements("\n"+pq.toString()+" full heap after 1 removals \n ");
+		
 		result = ((Integer)pq.removeMin()).intValue();
-		System.out.println("res: expected 9 --" + result + ":" + pq);
-
-		//System.out.println(pq.toString());
+		//System.out.println("res: expected 9 --" + result + ":" );
+		
+		//System.out.println(pq.toString() );
 		displayResults(result == 9, "remove on multiple element PQ");
 		displayResults(pq.size() == 1, "remove + size on multiple element PQ");
 

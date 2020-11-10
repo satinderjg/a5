@@ -27,6 +27,8 @@ public class HeapPriorityQueue implements PriorityQueue {
 	}
 
 	private void bubbleDown(int index){
+		//System.out.println(" bubbleDown on - " +index);
+
 		// Smaller number should go up
 		// Bigger number go down
 		int lt_child_i = 2*(index);
@@ -35,29 +37,40 @@ public class HeapPriorityQueue implements PriorityQueue {
 		if(index >=currentSize){
 			return;
 		}
-		// which of both child is bigger, or bigger and longer in q
-		if(is_first_index_bigger(lt_child_i,rt_child_i)){
-			//rt kid < than left
-			//check if parent > rt kid
-			if(is_first_index_bigger(index,rt_child_i)){
-			// parent is > than rt kid becouse smaller number should go up
-			// swap rt child with parentNode
+
+		if(is_first_index_smaller(rt_child_i,lt_child_i) && is_first_index_smaller(lt_child_i,index)){
+			swap(lt_child_i,index);
+			bubbleDown(lt_child_i);
+		}
+
+		if(is_first_index_smaller(lt_child_i,rt_child_i) && is_first_index_smaller(rt_child_i,index)){
 			swap(rt_child_i,index);
 			bubbleDown(rt_child_i);
-			}
-
-		}else{
-			// lt kid is smaller than rt or == and in the q for longer time prediod.
-			if(is_first_index_bigger(index,lt_child_i)){
-				swap(lt_child_i,index);
-				bubbleDown(lt_child_i);
-			}
 		}
+
+		// which of both child is bigger, or bigger and longer in q
+		// if(is_first_index_smaller(lt_child_i,rt_child_i)){
+		// 	//lt kid < rt than left
+		// 	//check if parent > rt kid
+		// 	if(is_first_index_smaller(lt_child_i,index)){
+		// 	// parent is > than lt kid becouse smaller number should go up
+		// 	// swap lt child with parentNode
+		// 	swap(lt_child_i,index);
+		// 	bubbleDown(lt_child_i);
+		// 	}
+
+		// }else{
+		// 	// rt kid is smaller than rt or == and in the q for longer time prediod.
+		// 	if(is_first_index_smaller(rt_child_i,index)){
+		// 		swap(rt_child_i,index);
+		// 		bubbleDown(rt_child_i);
+		// 	}
+		// }
 
 
 	}
 
-	private boolean is_first_index_bigger(int index1,int index2){
+	private boolean is_first_index_smaller(int index1,int index2){
 
 		Comparable first = this.storage[index1];
 		Comparable secound = this.storage[index2];
@@ -78,10 +91,7 @@ public class HeapPriorityQueue implements PriorityQueue {
 			return;
 		}
 		int parent_index=(int)Math.floor(index/2);
-		//Comparable parent = this.storage[parent_index];
-		//Comparable kid = this.storage[index];
-		//if(storage[parent_index].getElement().compareTo(storage[index] <0){
-		if(is_first_index_bigger(index,parent_index)){
+		if(is_first_index_smaller(index,parent_index)){
 			//7.compareto(4) <0
 			swap(parent_index,index);
 			bubbleUp(parent_index);
@@ -90,6 +100,7 @@ public class HeapPriorityQueue implements PriorityQueue {
 
 
 	 public void insert(Comparable element){
+	 	// this works perfectly 
 	 	int l = storage.length;
 	 	if(currentSize==l-1){
 	 			throw new HeapFullException("Cannot insert heap is full!");
@@ -107,13 +118,15 @@ public class HeapPriorityQueue implements PriorityQueue {
 	 	if(currentSize==0){
 	 		throw new HeapEmptyException("Heap is empty Cannot removeLow");
 	 	}
-	 	//if only one element 
-	 	if(currentSize ==1){
-	 		currentSize--;
-	 	}
+	 	
+	 	
 	 	Comparable head = storage[1];
 	 	swap(1,currentSize);
 	 	currentSize--;
+
+	 	// if(currentSize ==2){
+	 	// 	return head;
+	 	// }
 
 	 	bubbleDown(1);
 
