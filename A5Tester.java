@@ -41,14 +41,14 @@ public class A5Tester {
 		testInsertionAndRemoval();
 		testExceptions();
 		testGeneric();
-		
-		//testDuplicates();
-		//testMixed();
-		//stressTest();
+
+		testDuplicates();
+		testMixed();
+		stressTest();
 
 		/* Uncomment the following lines once you begin Part 2 */
 		
-		// System.out.println("Testing Application using Priority Queue.");
+		 System.out.println("Testing Application using Priority Queue.");
 		// testPassenger();
 		// testBoardingGate();
 		
@@ -214,11 +214,12 @@ public class A5Tester {
 		pq.insert(1);
 		pq.insert(5);
 		pq.insert(0);
-		// System.out.println("q after insert 4 1 1 5 0:" + q);
+		//System.out.println("pq after insert 4 1 1 5 0:" + pq.toString());
 
 		result = ((Integer)pq.removeMin()).intValue();
-		displayResults(result == 0, "add duplicates + remove single");
-
+		//displayResults(result == 0, "add duplicates + remove single");
+		//System.out.println(" \n   " + pq.toString());
+		
 		pq.insert(4);
 		pq.insert(1);
 		pq.insert(4);
@@ -229,6 +230,7 @@ public class A5Tester {
 		pq.insert(0);
 		pq.insert(5);
 
+		//System.out.println(" \n af  " + pq.toString());
 
 		result = ((Integer)pq.removeMin()).intValue();
 		displayResults(result == 0, "add duplicates + remove duplicates");

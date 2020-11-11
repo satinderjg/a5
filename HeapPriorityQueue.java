@@ -27,17 +27,48 @@ public class HeapPriorityQueue implements PriorityQueue {
 	}
 
 	private void bubbleDown(int index){
-		//System.out.println(" bubbleDown on - " +index);
-
 		// Smaller number should go up
 		// Bigger number go down
-		int lt_child_i = 2*(index);
-		int rt_child_i = 2*(index)+1;
+		
+		while(hasLeftChild(index)){
+			// If there is a child 
+			int smaller_child_i = getLeftIndex(index);
+			int rt_child_i = getRightIndex(index);
+
+
+			if( (hasRightChild(index)) && (storage[smaller_child_i].compareTo(storage[rt_child_i])>0 ) ){
+				// if it has rt child and rt is smaler than left 
+				smaller_child_i = rt_child_i;
+			}
+
+			if(storage[index].compareTo(storage[smaller_child_i]) >=0){
+				// parent with kid elemet 
+				swap(index,smaller_child_i); 
+			}else{
+				// kids have smaller value no need to continue code
+				return;
+			}
+
+			index = smaller_child_i;
+
+		}		
+
+		/*
+		int lt_child_i = getLeftIndex(index);
+
+		int rt_child_i = getRightIndex(index);
 
 		if(index >=currentSize){
 			return;
 		}
+		if(!hasLeftChild(index)){
+			System.out.println("no left child");
+			return;
+		}
+		Comparable lt_kid = this.storage[lt_child_i];
+		Comparable rt_kid = this.storage[rt_child_i];
 
+		//first.compareTo(secound) <0
 		if(is_first_index_smaller(rt_child_i,lt_child_i) && is_first_index_smaller(lt_child_i,index)){
 			swap(lt_child_i,index);
 			bubbleDown(lt_child_i);
@@ -48,34 +79,28 @@ public class HeapPriorityQueue implements PriorityQueue {
 			bubbleDown(rt_child_i);
 		}
 
-		// which of both child is bigger, or bigger and longer in q
-		// if(is_first_index_smaller(lt_child_i,rt_child_i)){
-		// 	//lt kid < rt than left
-		// 	//check if parent > rt kid
-		// 	if(is_first_index_smaller(lt_child_i,index)){
-		// 	// parent is > than lt kid becouse smaller number should go up
-		// 	// swap lt child with parentNode
-		// 	swap(lt_child_i,index);
-		// 	bubbleDown(lt_child_i);
-		// 	}
+		
 
-		// }else{
-		// 	// rt kid is smaller than rt or == and in the q for longer time prediod.
-		// 	if(is_first_index_smaller(rt_child_i,index)){
-		// 		swap(rt_child_i,index);
-		// 		bubbleDown(rt_child_i);
-		// 	}
-		// }
-
-
+		if(lt_kid.equals(rt_kid)){
+			if(is_first_index_smaller(lt_child_i,index)){
+				swap(lt_child_i,index);
+				bubbleDown(lt_child_i);
+			}
+		}
+*/
+		
 	}
 
-	private boolean is_first_index_smaller(int index1,int index2){
 
+
+	private boolean is_first_index_smaller(int index1,int index2){
+		// this is the shady part of code 
+		// this works well but I don't know how 
 		Comparable first = this.storage[index1];
 		Comparable secound = this.storage[index2];
 
 		if(first.compareTo(secound) <0){
+			//bigger.compariedto(smaller) 
 			// 7.compairedTo(4)
 			return true;
 		}else{
@@ -195,11 +220,36 @@ public class HeapPriorityQueue implements PriorityQueue {
 	public String toString() {
 		String s = "";
 		String sep = "";
-		for(int i=0;i<=currentSize;i++) {
+		for(int i=1;i<=currentSize;i++) {
 			s+= sep + storage[i];
 			sep = " ";
 		}
 		return s;
 	}
+
+	/*
+		Extra helper funtions 
+	*/
+	protected int getLeftIndex(int i) {
+        return i * 2;
+    }
+    
+
+	protected boolean hasLeftChild(int i) {
+        return getLeftIndex(i) <= currentSize;
+    }
+
+    protected int getRightIndex(int i) {
+        return i * 2 + 1;
+    }
+    
+    
+    
+    
+    
+    protected boolean hasRightChild(int i) {
+        return getRightIndex(i) <= currentSize;
+    }
+
 
 }
