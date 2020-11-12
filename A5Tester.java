@@ -37,6 +37,7 @@ public class A5Tester {
 
 		System.out.println("Testing " + (testHeapSolution ? "Heap" : "Linked" ) + " implementation.");
 		
+		/*
 		testSize();
 		testInsertionAndRemoval();
 		testExceptions();
@@ -45,14 +46,63 @@ public class A5Tester {
 		testDuplicates();
 		testMixed();
 		stressTest();
+		*/
 
 		/* Uncomment the following lines once you begin Part 2 */
 		
-		 System.out.println("Testing Application using Priority Queue.");
-		// testPassenger();
-		// testBoardingGate();
+		 System.out.println(" \n Testing Application using Priority Queue. \n");
+		 //testPassenger();
+		 testBoardingGate();
 		
 		System.out.println("PASSED " + testPassCount + "/" + testCount + " tests");
+	}
+
+
+	public static void testBoardingGate(){
+		Time t1 = new Time(05,00);
+		Patient p1 = new Patient(1,"a","a1",t1);
+		Patient p2 = new Patient(5,"b","b5",t1);
+		Patient p3 = new Patient(1,"z","z1",t1);
+		t1 =  new Time(12,00);
+		Patient p4 = new Patient(1,"c","c1",t1);
+
+		EmergencyRoom em = new EmergencyRoom();
+		em.addPatient(p1);
+		em.addPatient(p2);
+		em.addPatient(p3);
+		em.addPatient(p4);
+		
+		System.out.println(em.nextPatient());
+		System.out.println(em.nextPatient());
+		System.out.println(em.nextPatient());
+		System.out.println(em.nextPatient());
+		System.out.println(em.nextPatient());
+		
+
+	}
+
+	public static void testPassenger() {
+		Time t1 = new Time(05,00);
+		Patient p1 = new Patient(1,"a","a1",t1);
+		Patient p2 = new Patient(5,"b","b5",t1);
+		Patient p3 = new Patient(1,"z","z1",t1);
+		t1 =  new Time(12,00);
+		Patient p4 = new Patient(1,"c","c1",t1);
+
+		System.out.println("Basic testing of Passenger-- compareTo");
+		// -ve is high pripotry i.e this.before.other
+		int rst = p1.compareTo(p2);
+		displayResults ((rst<0), "diffent pri.");
+		rst = p1.compareTo(p3);
+		displayResults ((rst==0), "same pri. amd same time");
+
+		rst = p1.compareTo(p4);
+		displayResults ((rst<0), "same pri. amd diff. time");
+
+
+		System.out.println("\n Basic testing of Passenger-- equals \n");
+		displayResults (!(p1.equals(p3)), "equals");
+
 	}
 
 

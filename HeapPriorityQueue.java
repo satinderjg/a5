@@ -19,13 +19,35 @@ public class HeapPriorityQueue implements PriorityQueue {
 
 	protected Comparable[] storage;
 	protected int currentSize;
+	
+	public Comparable removeMin(){
+	 	// no element
+	 	if(currentSize==0){
+	 		throw new HeapEmptyException("Heap is empty Cannot removeLow");
+	 	}
+	 	
+	 	
+	 	Comparable head = storage[1];
+	 	swap(1,currentSize);
+	 	currentSize--;
 
-	private void swap(int index_from,int index_to){
-		Comparable temp = this.storage[index_from];
-		this.storage[index_from]= this.storage[index_to];
-		this.storage[index_to]= temp;
-	}
+	 	bubbleDown(1);
 
+	 	return head;
+	 }
+	 public void insert(Comparable element){
+	 	// this works perfectly 
+	 	int l = storage.length;
+	 	if(currentSize==l-1){
+	 			throw new HeapFullException("Cannot insert heap is full!");
+	 	}
+	 	//System.out.println(currentSize);
+		this.currentSize++;
+		storage[currentSize]=element;
+
+		// new element is at top of heap now bubbleUp!
+		bubbleUp(currentSize);
+	 }
 	private void bubbleDown(int index){
 		// Smaller number should go up
 		// Bigger number go down
@@ -53,61 +75,6 @@ public class HeapPriorityQueue implements PriorityQueue {
 
 		}		
 
-		/*
-		int lt_child_i = getLeftIndex(index);
-
-		int rt_child_i = getRightIndex(index);
-
-		if(index >=currentSize){
-			return;
-		}
-		if(!hasLeftChild(index)){
-			System.out.println("no left child");
-			return;
-		}
-		Comparable lt_kid = this.storage[lt_child_i];
-		Comparable rt_kid = this.storage[rt_child_i];
-
-		//first.compareTo(secound) <0
-		if(is_first_index_smaller(rt_child_i,lt_child_i) && is_first_index_smaller(lt_child_i,index)){
-			swap(lt_child_i,index);
-			bubbleDown(lt_child_i);
-		}
-
-		if(is_first_index_smaller(lt_child_i,rt_child_i) && is_first_index_smaller(rt_child_i,index)){
-			swap(rt_child_i,index);
-			bubbleDown(rt_child_i);
-		}
-
-		
-
-		if(lt_kid.equals(rt_kid)){
-			if(is_first_index_smaller(lt_child_i,index)){
-				swap(lt_child_i,index);
-				bubbleDown(lt_child_i);
-			}
-		}
-*/
-		
-	}
-
-
-
-	private boolean is_first_index_smaller(int index1,int index2){
-		// this is the shady part of code 
-		// this works well but I don't know how 
-		Comparable first = this.storage[index1];
-		Comparable secound = this.storage[index2];
-
-		if(first.compareTo(secound) <0){
-			//bigger.compariedto(smaller) 
-			// 7.compairedTo(4)
-			return true;
-		}else{
-			// smaller or == i.e longer in q
-			return false;
-		}
-		
 	}
 	private void bubbleUp(int index){
 		// smaller number should go and bigger go down
@@ -122,42 +89,7 @@ public class HeapPriorityQueue implements PriorityQueue {
 			bubbleUp(parent_index);
 		}
 	}
-
-
-	 public void insert(Comparable element){
-	 	// this works perfectly 
-	 	int l = storage.length;
-	 	if(currentSize==l-1){
-	 			throw new HeapFullException("Cannot insert heap is full!");
-	 	}
-	 	//System.out.println(currentSize);
-		this.currentSize++;
-		storage[currentSize]=element;
-
-		// new element is at top of heap now bubbleUp!
-		bubbleUp(currentSize);
-	 }
-
-	 public Comparable removeMin(){
-	 	// no element
-	 	if(currentSize==0){
-	 		throw new HeapEmptyException("Heap is empty Cannot removeLow");
-	 	}
-	 	
-	 	
-	 	Comparable head = storage[1];
-	 	swap(1,currentSize);
-	 	currentSize--;
-
-	 	// if(currentSize ==2){
-	 	// 	return head;
-	 	// }
-
-	 	bubbleDown(1);
-
-	 	return head;
-	 }
-	 public boolean isEmpty(){
+	public boolean isEmpty(){
 	 	return (currentSize==0);	
 	 }
 	 public int	size (){
@@ -180,9 +112,6 @@ public class HeapPriorityQueue implements PriorityQueue {
 		currentSize =0;
 		storage[0]=null;
 	}
-
-
-
 	/* constructor
 	 *
 	 * PURPOSE:
@@ -198,13 +127,6 @@ public class HeapPriorityQueue implements PriorityQueue {
 		storage[0]=null;
 	
 	}
-
-	
-	
-
-
-
-
 	/*
 	 * PURPOSE:
 	 *    constructs a String representation of the elements in storage
@@ -230,22 +152,36 @@ public class HeapPriorityQueue implements PriorityQueue {
 	/*
 		Extra helper funtions 
 	*/
+	private void swap(int index_from,int index_to){
+		Comparable temp = this.storage[index_from];
+		this.storage[index_from]= this.storage[index_to];
+		this.storage[index_to]= temp;
+	}
 	protected int getLeftIndex(int i) {
         return i * 2;
     }
-    
-
 	protected boolean hasLeftChild(int i) {
         return getLeftIndex(i) <= currentSize;
     }
-
     protected int getRightIndex(int i) {
         return i * 2 + 1;
     }
-    
-    
-    
-    
+    private boolean is_first_index_smaller(int index1,int index2){
+		// this is the shady part of code 
+		// this works well but I don't know how 
+		Comparable first = this.storage[index1];
+		Comparable secound = this.storage[index2];
+
+		if(first.compareTo(secound) <0){
+			//bigger.compariedto(smaller) 
+			// 7.compairedTo(4)
+			return true;
+		}else{
+			// smaller or == i.e longer in q
+			return false;
+		}
+		
+	}
     
     protected boolean hasRightChild(int i) {
         return getRightIndex(i) <= currentSize;

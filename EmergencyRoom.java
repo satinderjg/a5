@@ -3,6 +3,7 @@
  */
 
 public class EmergencyRoom {
+	//? waiting number ticket (which is a letter followed by numbers), ????
 
 	private PriorityQueue patients;
 
@@ -11,6 +12,7 @@ public class EmergencyRoom {
 	 */
 	public EmergencyRoom() {
 		// TODO: implement this
+		patients = new HeapPriorityQueue();
 	}
 
 	/* 
@@ -18,6 +20,7 @@ public class EmergencyRoom {
 	 */
 	public EmergencyRoom(int size) {
 		// TODO: implement this
+		patients = new HeapPriorityQueue(size);
 	}
 
 
@@ -29,6 +32,15 @@ public class EmergencyRoom {
 	 */
 	public void addPatient(Patient p) {
 		// TODO: implement this
+		if(p == null){
+			return;
+		}
+		try{
+			patients.insert(p);
+		}catch(HeapFullException e){
+			System.out.println("EmergencyRoom room is full Dude!");
+		}
+		
 	}
 
 
@@ -38,7 +50,7 @@ public class EmergencyRoom {
 	 */
 	public int numPatientsWaiting() {
 		// TODO: implement this
-		return -1; // so it compiles
+		return (patients.size()); // so it compiles
 	}
 
 
@@ -48,7 +60,14 @@ public class EmergencyRoom {
 	 */
 	public Patient nextPatient() {
 		// TODO: implement this
-		return null; // so it compiles
+		try{
+			
+			return ((Patient)patients.removeMin()); // so it compiles
+	
+		}catch(HeapEmptyException e){
+			System.out.println("nothing to remove");
+			return(null);
+		}
 	}
 }
 

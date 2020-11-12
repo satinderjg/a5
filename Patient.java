@@ -70,7 +70,29 @@ public class Patient implements Comparable<Patient>{
 	 */
 	public int compareTo(Patient other) {
 		//TODO: implement this
-		return -1; // so it compiles
+		if(this.priorityLevel <(other.getPriorityLevel()) ){
+			return -1;
+		}
+
+		if(this.priorityLevel > other.getPriorityLevel()){
+			return 1;
+		}
+
+		// below code will run if same priority 
+		// if(this.priorityLevel == other.getPriorityLevel()){
+		// now lets check for time 
+
+		if(this.checkinTime.compareTo(other.getTime())<0){
+			return -1;
+		}
+
+		if(this.checkinTime.compareTo(other.getTime())>0){
+			return 1;
+		}
+
+		// below code will only run if same pri. and same time then we have to just flip a coin lol #JustChill
+
+		return 0; // so it compiles
 	}
 
 	/* Method Name: equals
@@ -82,7 +104,7 @@ public class Patient implements Comparable<Patient>{
 	 */
 	public boolean equals(Patient other) {
 		//TODO: implement this
-		return false; // so it compiles
+		return (this.waitingNumber == other.getWaitingNumber()); // so it compiles
 	}
 }
 
